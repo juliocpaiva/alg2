@@ -55,4 +55,38 @@ lista2 = lista1
 
 lista2[0] = 'b'
 print(lista1)
-	
+
+for i in range(0,10,1):
+	print(i)
+
+x =0
+#lista1 = [0,1,2,3,4,5,6,7,8,9]
+for i in range(0,100_000_000.1):
+	x = x + i
+
+x = 0
+lista1 = list(range(0,100_000_000.1)):
+for i in lista1:
+	x=x+1
+
+lista1=[1,2,3,4]
+
+lista2=lista1[2:]
+print(lista2)
+
+print(lista1[1])
+print(lista1[-1]) #contagem decrescente...
+
+lista2[0] = 100
+
+print(lista1)
+
+
+lista1 = [1,2,3,4]
+lista2 = lista1[0:]
+
+print(id(lista1))
+print(id(lista2))
+
+
+print(2 in lista1)
