@@ -1,61 +1,73 @@
-#divisão e conquista...
-
-#divisão
-#conquista
-#combinação
+from random import randint
+import sys
 
 
-def merge(lista1, lista2):
-	lista = []
-	i = 0
-	j = 0
-	
-	while i < len(lista1) and j < len(lista2):
-		if lista1[i] < lista2[j]:
-			lista.append(lista1[i])
-			i += 1
-		else:
-			lista.append(lista2[j])
-			j +=1
-			
-	while i < len(lista1):
-		lista.append(lista1[i])
-		i +=1
-		
-	while j < len(lista2):
-		lista.append(lista2[j])			
-		j += 1
-	return lista	
-		
-		
+def merge(listaA, listaB):
+    lista = []
+    i = 0
+    j = 0
+    while i < len(listaA) and j < len(listaB):
+        if listaA[i] < listaB[j]:
+            lista.append(listaA[i])
+            i += 1
+        else:
+            lista.append(listaB[j])
+            j += 1
+    
+    while i < len(listaA):
+        lista.append(listaA[i])
+        i += 1
+    
+    while j < len(listaB):
+        lista.append(listaB[j])
+        j += 1
+    return lista
+    
+
+
 def mergesort(lista):
+    if len(lista) <= 1:
+        return lista
+    
+    meio = len(lista) // 2    
+    listaA = mergesort(lista[:meio])
+    listaB = mergesort(lista[meio:])
+    return merge(listaA, listaB)
 
-	if len(lista) <= 1:
-		return lista
-		
-	meio = len(lista) // 2
-	lista1 = mergesort(lista[:meio])
-	lista2 = mergesort(lista[meio:])
-	return merge (lista1, lista2)	
-	
-	
-def quicksort(lista, esq, dir):	
-	if esq < dir:
-		p = partition(lista, esq, dir)
-		quicksort(lista, esq, p-1)
-		quicksort(lista, p+1, dir)
-	
-			
-lista1 = [1, 18, 33, 42]		
-lista2 = [2, 13, 45, 46]		
 
-lista = merge(lista1, lista2)
+def partition(lista, esq, dir):
+    r = randint(esq,dir)
+    aux = lista[r]
+    lista[r] = lista[esq]
+    lista[esq] = aux
+    j = esq
+    pivot = lista[dir]  # Mudando para pegar o último elemento como pivô
+    for k in range(esq, dir):
+        if lista[k] < pivot:
+            lista[j], lista[k] = lista[k], lista[j]
+            j += 1
+    lista[j], lista[dir] = lista[dir], lista[j]  # Coloca o pivô no lugar correto
+    return j
+
+
+def quicksort(lista, esq, dir):
+    if esq < dir:
+        p = partition(lista, esq, dir)
+        quicksort(lista, esq, p - 1)
+        quicksort(lista, p + 1, dir)
+
+
+# Teste de merge
+listaA = [1, 18, 33, 42]
+listaB = [2, 13, 16, 46]
+lista = merge(listaA, listaB)
+print("Merged List:", lista)
+
+# Teste de quicksort
+sys.setrecursionlimit(10000)
+lista = list(range(0, 10000))
+quicksort(lista, 0, len(lista) - 1)
+
 print(lista)
-
-
-lista = [18, 1, 33, 42, 16, 46, 2, 13]
-lista = mergesort(lista)
-print(lista)
-
-
-# ---------- digão sort -------------- 03/04/2025 - 22h10
+#teorema... para qualquer entrada o tempo esperado de execução do quick sort
+# é o(n log n)...
